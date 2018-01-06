@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import Database from './../controllers/databaseController';
+import Validation from './../controllers/validation';
+import LoginController from './../controllers/loginController';
 
 export default () => {
     const router = Router();
@@ -12,20 +14,21 @@ export default () => {
             password: req.body.password,
             date: date
         };
-        Database.getPool((err, db) => {
-            if (err) {
-                console.log(err);
+        let isValidEmail = Validation.isValidEmail(data['email']);
+        let isValidPassword = Validation.isValidPassword(data['password']);
+        if(isValidEmail && isValidPassword) {
+
+        } else {
+            return;
+        }
+        LoginController.createUser(data, (created, results) => {
+            if(created) {
+                console.log('user created!')
+                res.redirect('/');
             } else {
-                db.collection('users').insert(data, (err, result) => {
-                    if(err) {
-                        console.log(err);
-                    } else {
-                        console.log('saved to database')
-                    }
-                })
+                console.log('user not created');
             }
         })
-        res.sendStatus(200);
     });
     return router;
 }

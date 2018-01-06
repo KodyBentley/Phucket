@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const databaseController_1 = require("./../controllers/databaseController");
+const validation_1 = require("./../controllers/validation");
+const loginController_1 = require("./../controllers/loginController");
 exports.default = () => {
     const router = express_1.Router();
     router.post('/', (req, res) => {
@@ -12,22 +13,22 @@ exports.default = () => {
             password: req.body.password,
             date: date
         };
-        databaseController_1.default.getPool((err, db) => {
-            if (err) {
-                console.log(err);
+        let isValidEmail = validation_1.default.isValidEmail(data['email']);
+        let isValidPassword = validation_1.default.isValidPassword(data['password']);
+        if (isValidEmail && isValidPassword) {
+        }
+        else {
+            return;
+        }
+        loginController_1.default.createUser(data, (created, results) => {
+            if (created) {
+                console.log('user created!');
+                res.redirect('/');
             }
             else {
-                db.collection('users').insert(data, (err, result) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    else {
-                        console.log('saved to database');
-                    }
-                });
+                console.log('user not created');
             }
         });
-        res.sendStatus(200);
     });
     return router;
 };
