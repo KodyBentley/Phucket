@@ -14,7 +14,7 @@ exports.default = () => {
                 console.log('error', err);
             }
             else {
-                db.collection('users').update({
+                db.collection('imgData').update({
                     "_id": new Mongo.ObjectId(id),
                 }, {
                     "imgPath": path,

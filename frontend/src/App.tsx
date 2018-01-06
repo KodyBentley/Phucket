@@ -30,6 +30,7 @@ class App extends React.Component<{}, any> {
       .then((users) => {
         return this.setState({ users });
       });
+      console.log(this.state.users);
   }
 
   togglePopup() {

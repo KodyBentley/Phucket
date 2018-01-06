@@ -25,7 +25,7 @@ exports.default = () => {
                 console.log(err);
             }
             else {
-                db.collection('users').insert(mongoPath, (err, result) => {
+                db.collection('imgData').insert(mongoPath, (err, result) => {
                     if (err) {
                         console.log(err);
                     }

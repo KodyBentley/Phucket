@@ -20,7 +20,7 @@ export default () => {
             if (err) {
                 console.log(err);
             } else {
-                db.collection('users').remove({"_id": new Mongo.ObjectId(id)}, (err, result) => {
+                db.collection('imgData').remove({"_id": new Mongo.ObjectId(id)}, (err, result) => {
                     if(err) {
                         console.log(err);
                     } else {

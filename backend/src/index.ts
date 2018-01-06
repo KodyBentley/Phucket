@@ -3,6 +3,7 @@ import * as bodyParser from "body-parser";
 import ImageUploadRoute from './routes/imageUploadRoute';
 import ImageDeleteRoute from './routes/imageDeleteRoute';
 import ImageUpdateRoute from './routes/imageUpdateRoute';
+import RegisterRoute from './routes/registerRoute';
 import Database from './controllers/databaseController';
 const path = require('path');
 
@@ -37,9 +38,11 @@ export default class Server {
 
         this._app.use('/update', ImageUpdateRoute());
 
+        this._app.use('/register', RegisterRoute());
+
         this._app.get('/api', (req, res) => {
             Database.getPool((err, db) => {
-                db.collection('users').find().toArray((err, results) => {
+                db.collection('imgData').find().toArray((err, results) => {
                     res.json(results);
                 })
             });
