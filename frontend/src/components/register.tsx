@@ -10,10 +10,10 @@ class Register extends React.Component<{}, {}> {
             <div className="page-container">
                 <Jumbotron className="register-header"><h1>Register</h1></Jumbotron>
                 <Grid>
-                    <Row> 
-                        <Col className="register-container" lg={12}> 
-                            <Col className="register-box" lgPush={3} lgPull={3} lg={6}> 
-                                <div> 
+                    <Row>
+                        <Col className="register-container" lg={12}>
+                            <Col className="register-box" lgPush={3} lgPull={3} lg={6}>
+                                <div>
                                     <h3>Please Register</h3>
                                     <form className="register-form">
                                         <input type="text" placeholder="Name"></input>
