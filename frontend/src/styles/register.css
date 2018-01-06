@@ -1,0 +1,34 @@
+.register-header {
+    background: #000000;
+    color: #ffffff;
+    text-align: center;
+}
+
+.register-container {
+    text-align: center;
+}
+
+.register-box {
+    background: #5e5e5e;
+    border-radius: 5%;
+}
+
+.register-box h3 {
+    color: #ffffff;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 50%;
+}
+
+.register-form input {
+    margin-bottom: 5%;
+}
+
+.register-submit-btn {
+    width: 25%;
+    margin: auto;
+}
