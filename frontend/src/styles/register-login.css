@@ -24,6 +24,10 @@
     width: 50%;
 }
 
+.register-form p {
+    color: #ffffff;
+}
+
 .register-form input {
     margin-bottom: 5%;
 }
@@ -31,4 +35,10 @@
 .register-submit-btn {
     width: 25%;
     margin: auto;
+}
+
+.login-btn {
+    margin: auto;
+    margin-bottom: 5%;
+    width: 50%;
 }

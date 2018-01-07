@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Jumbotron, Row, Col, Grid } from 'react-bootstrap';
+import { Jumbotron, Row, Col, Grid, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './../styles/register-login.css';
 
 
@@ -19,6 +20,9 @@ class Register extends React.Component<{}, {}> {
                                         <input type="text" placeholder="Email"/>
                                         <input type="text" placeholder="Password" />
                                         <input className="register-submit-btn" type="Submit" value="Submit" />
+
+                                        <p>Not a member? Register here.</p>
+                                            <Link to="/register"><Button className="login-btn" bsStyle="primary">Register</Button></Link>
                                     </form>
                                 </div>
                             </Col>

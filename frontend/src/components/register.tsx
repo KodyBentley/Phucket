@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Jumbotron, Row, Col, Grid, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import App from './../App';
 import Login from './login';
 import './../styles/register-login.css';
@@ -62,9 +63,9 @@ class Register extends React.Component<Props, State> {
     }
 
     render() {
-        if(this.state.member) {
-            return <Login />
-        }
+        // if (this.state.member) {
+        //     return <Login />
+        // }
         if (this.state.submitted) {
             return <App />
         } else {
@@ -89,7 +90,7 @@ class Register extends React.Component<Props, State> {
                                             <input className="register-submit-btn" type="Submit" value="Submit" />
 
                                             <p>Already a member? Click here</p>
-                                            <Button onClick={this.clicked}bsStyle="primary">Login</Button>
+                                            <Link to="/login"><Button className="login-btn" onClick={this.clicked} bsStyle="primary">Login</Button></Link>
                                         </form>
                                     </div>
                                 </Col>
