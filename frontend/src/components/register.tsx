@@ -63,9 +63,6 @@ class Register extends React.Component<Props, State> {
     }
 
     render() {
-        // if (this.state.member) {
-        //     return <Login />
-        // }
         if (this.state.submitted) {
             return <App />
         } else {

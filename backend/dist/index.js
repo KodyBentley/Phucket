@@ -6,6 +6,7 @@ const imageUploadRoute_1 = require("./routes/imageUploadRoute");
 const imageDeleteRoute_1 = require("./routes/imageDeleteRoute");
 const imageUpdateRoute_1 = require("./routes/imageUpdateRoute");
 const registerRoute_1 = require("./routes/registerRoute");
+const loginRoute_1 = require("./routes/loginRoute");
 const databaseController_1 = require("./controllers/databaseController");
 const path = require('path');
 class Server {
@@ -31,6 +32,7 @@ class Server {
         this._app.use('/delete', imageDeleteRoute_1.default());
         this._app.use('/update', imageUpdateRoute_1.default());
         this._app.use('/register', registerRoute_1.default());
+        this._app.use('/login', loginRoute_1.default());
         this._app.get('/api', (req, res) => {
             databaseController_1.default.getPool((err, db) => {
                 db.collection('imgData').find().toArray((err, results) => {
