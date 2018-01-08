@@ -3,8 +3,8 @@ import { render } from 'react-dom';
 import { Button } from 'react-bootstrap';
 
 interface Props {
-    updateName: any;
-    toggleInputBox: any;
+    updateName: Function;
+    toggleInputBox: Function;
 }
 
 interface State {
@@ -21,11 +21,11 @@ class Input extends React.Component<Props, State> {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(e: any) {
+    handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         this.setState({ value: e.target.value });
     }
 
-    handleSubmit(e: any) {
+    handleSubmit(e: React.ChangeEvent<HTMLFormElement>) {
         this.props.updateName(this.state.value);
     }
 

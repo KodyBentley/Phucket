@@ -10,28 +10,45 @@ import Props from './interfaces/iProp';
 import './App.css';
 import { InputGroup } from 'react-bootstrap';
 
-class App extends React.Component<{}, any> {
+interface State {
+  imgData: Array<{_id: string, imgPath: string, name: string}>;
+  showPopup: boolean;
+  showInput: boolean;
+}
+
+class App extends React.Component<{}, State> {
   constructor(props: Props) {
     super(props);
     this.togglePopup = this.togglePopup.bind(this);
     this.toggleInput = this.toggleInput.bind(this);
     this.state = {
-      users: [],
+      imgData: [],
       showPopup: false,
       showInput: false
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     fetch('/api')
       .then((res) => {
         return res.json();
       })
-      .then((users) => {
-        return this.setState({ users });
+      .then((imgData) => {
+        console.log('img data', imgData)
+        return this.setState({ imgData });
       });
-      console.log(this.state.users);
   }
+
+  // componentDidMount() {
+  //   fetch('/api')
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((users) => {
+  //       return this.setState({ users });
+  //     });
+  //     console.log(this.state.users);
+  // }
 
   togglePopup() {
     this.setState({
@@ -45,29 +62,30 @@ class App extends React.Component<{}, any> {
     });
   }
 
-  deleteItem(user: any) {
-    let arrIndex: number = this.state.users.indexOf(user);
+  deleteItem(data: {_id: string, imgPath: string, name: string}) {
+    let arrIndex: number = this.state.imgData.indexOf(data);
     fetch('/delete', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: user }),
+      body: JSON.stringify({ data: data }),
       redirect: 'manual'
     })
       .then((res) => {
         return res.json();
       });
     this.setState(state => {
-      state.users.splice(arrIndex, 1);
-      return { users: state.users };
+      state.imgData.splice(arrIndex, 1);
+      return { imgData: state.imgData };
     });
     this.togglePopup();
   }
 
-  updateItem(user: any, newName: string) {
+  updateItem(data: {_id: string, imgPath: string, name: string}, newName: string) {
+    console.log(data);
     fetch('/update', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: user, name: newName }),
+      body: JSON.stringify({ data: data, name: newName }),
       redirect: 'manual'
     })
       .then((res) => {
@@ -75,29 +93,29 @@ class App extends React.Component<{}, any> {
       });
 
     this.toggleInput();
-    location.reload();
+    // location.reload();
   }
 
   render() {
-    let test;
+    let data;
     return (
       <div className="App">
         < Header />
         < ImageUpload />
         <BootStrap.Grid className="container-fluid">
           <BootStrap.Row className="row-fluid">
-            {this.state.users.map(user => {
-              test = user;
+            {this.state.imgData.map(data => {
+              data = data;
               return (
-                <BootStrap.Col className="img-container" lg={4} key={user._id}>
-                  <div className="img-div" key={user._id}>
-                    <img src={user.imgPath}/>
-                    <p>{user.name}</p>
+                <BootStrap.Col className="img-container" lg={4} key={data._id}>
+                  <div className="img-div" key={data._id}>
+                    <img src={data.imgPath}/>
+                    <p>{data.name}</p>
                     <BootStrap.Button onClick={this.toggleInput} bsStyle="primary">Update</BootStrap.Button>
                     <BootStrap.Button onClick={this.togglePopup} bsStyle="danger">Delete</BootStrap.Button>
                     {this.state.showInput ?
                       <Input
-                        updateName={this.updateItem.bind(this, test)}
+                        updateName={this.updateItem.bind(this, data)}
                         toggleInputBox={this.toggleInput}
                       />
                       : null
@@ -114,7 +132,7 @@ class App extends React.Component<{}, any> {
           <Popup
             text="Are you sure you wish to delete this item?"
             closePopup={this.togglePopup}
-            deleteItem={this.deleteItem.bind(this, test)}
+            deleteItem={this.deleteItem.bind(this, data)}
           />
           : null
         }

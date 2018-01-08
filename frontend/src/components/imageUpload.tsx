@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import * as Dropzone from 'react-dropzone';
 
-class ImageUpload extends React.Component<{}, any> {
+class ImageUpload extends React.Component<{}, {}> {
   constructor(props: React.ReactPropTypes) {
     super(props);
 
@@ -35,7 +35,7 @@ class ImageUpload extends React.Component<{}, any> {
           return res.json();
         });
     };
-    location.reload();
+    // location.reload();
   }
 
   render() {

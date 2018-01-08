@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Jumbotron } from 'react-bootstrap';
 const logo = require('./../logo.svg');
 
-class Header extends React.Component<{}, any> {
+class Header extends React.Component<{}, {}> {
 
   render() {
     return (
