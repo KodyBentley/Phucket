@@ -6,12 +6,13 @@ const tokenSecret = 'secret';
 class Auth {
     static tokenVerify(token, cb) {
         console.log('TokenVerify');
+        console.log('TOKEN', token);
         JWT.verify(token, 'secret', (err, decoded) => {
             if (err) {
                 cb(false);
             }
             else {
-                cb(true);
+                cb(true, decoded);
             }
         });
     }

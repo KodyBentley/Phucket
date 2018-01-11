@@ -11,12 +11,15 @@ export default () => {
 
     router.get('/', (req, res) => {
         let token = req.cookies.authorization;
-        console.log(token);
-        Auth.tokenVerify(token, (loggedIn) => {
+        Auth.tokenVerify(token, (loggedIn, decoded) => {
             if (!loggedIn) {
                 console.log('YOU ARE NOT LOGGED IN')
             } else {
                 console.log('You ARE LOGGED IN')
+                return res.json({
+                    message: 'hello',
+                    user: decoded.sub
+                })
             }
         });
     });

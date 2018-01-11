@@ -8,13 +8,16 @@ exports.default = () => {
     const router = express_1.Router();
     router.get('/', (req, res) => {
         let token = req.cookies.authorization;
-        console.log(token);
-        authenticationController_1.default.tokenVerify(token, (loggedIn) => {
+        authenticationController_1.default.tokenVerify(token, (loggedIn, decoded) => {
             if (!loggedIn) {
                 console.log('YOU ARE NOT LOGGED IN');
             }
             else {
                 console.log('You ARE LOGGED IN');
+                return res.json({
+                    message: 'hello',
+                    user: decoded.sub
+                });
             }
         });
     });

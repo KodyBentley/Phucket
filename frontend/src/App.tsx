@@ -13,6 +13,7 @@ interface State {
   imgData: Array<{ _id: string, imgPath: string, name: string }>;
   showPopup: boolean;
   showInput: boolean;
+  user: string;
 }
 
 class App extends React.Component<Props, State> {
@@ -23,7 +24,8 @@ class App extends React.Component<Props, State> {
     this.state = {
       imgData: [],
       showPopup: false,
-      showInput: false
+      showInput: false,
+      user: ''
     };
   }
 
@@ -38,14 +40,16 @@ class App extends React.Component<Props, State> {
 
     fetch('/login', {
       method: 'GET',
+      headers: { Accept: 'application/json','Content-Type': 'application/json' },
       credentials: 'same-origin'
     })
       .then((res) => {
-        console.log(res);
         return res.json();
       })
       .then((data) => {
-        console.log(data);
+        this.setState({
+          user: data.user
+        })
       });
   }
 
@@ -99,7 +103,9 @@ class App extends React.Component<Props, State> {
     let test;
     return (
       <div className="App">
-        < Header />
+        < Header 
+          user={this.state.user}
+        />
         < ImageUpload />
         <BootStrap.Grid className="container-fluid">
           <BootStrap.Row className="row-fluid">
