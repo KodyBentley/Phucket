@@ -7,25 +7,25 @@ export default class LoginController {
             if (err) {
                 console.log('User Create Err ', err)
             } else {
-                db.collection('users').count({"email": email}, (err, results) => {
+                db.collection('users').find({"email": email }).toArray((err, results) => {
                     if (err) {
                         console.log('err in get user find', err)
                         cb(false, null);
                     } else {
-                        if(results > 0) {
-                            console.log('Results area')
+                        if(results.length > 0) {
+                            console.log('User exists. Logging in.')
                             cb(true, results)
                         } else {
-                            console.log("exists false")
+                            console.log("User does not exist")
                             cb(false, results);
                         }
                     }
-                });
+                })
             }
         });
     }
 
-    public static createUser(data: Object, cb: Function): void {
+    public static createUser(data: {name: string, email: string, password: string}, cb: Function): void {
         Database.getPool((err, db) => {
             if (err) {
                 console.log('User Create Err ', err)

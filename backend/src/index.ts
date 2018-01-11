@@ -1,10 +1,13 @@
 import * as express from 'express';
 import * as bodyParser from "body-parser";
+import * as CookieParser from "cookie-parser";
 import ImageUploadRoute from './routes/imageUploadRoute';
 import ImageDeleteRoute from './routes/imageDeleteRoute';
 import ImageUpdateRoute from './routes/imageUpdateRoute';
 import RegisterRoute from './routes/registerRoute';
 import LoginRoute from './routes/loginRoute';
+import AppRoute from './routes/appRoute';
+import Auth from './controllers/authenticationController';
 import Database from './controllers/databaseController';
 const path = require('path');
 
@@ -27,6 +30,10 @@ export default class Server {
             extended: true
         }));
 
+        this._app.use(CookieParser());
+
+        this._app.set('trust proxy', '127.0.0.1');
+
         this._app.use(function (req, res, next) {
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -42,6 +49,8 @@ export default class Server {
         this._app.use('/register', RegisterRoute());
 
         this._app.use('/login', LoginRoute());
+
+        this._app.use('/app', AppRoute());
 
         this._app.get('/api', (req, res) => {
             Database.getPool((err, db) => {

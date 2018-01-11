@@ -8,18 +8,18 @@ class LoginController {
                 console.log('User Create Err ', err);
             }
             else {
-                db.collection('users').count({ "email": email }, (err, results) => {
+                db.collection('users').find({ "email": email }).toArray((err, results) => {
                     if (err) {
                         console.log('err in get user find', err);
                         cb(false, null);
                     }
                     else {
-                        if (results > 0) {
-                            console.log('Results area');
+                        if (results.length > 0) {
+                            console.log('User exists. Logging in.');
                             cb(true, results);
                         }
                         else {
-                            console.log("exists false");
+                            console.log("User does not exist");
                             cb(false, results);
                         }
                     }

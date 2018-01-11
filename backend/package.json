@@ -4,8 +4,14 @@
   "private": true,
   "main": "index.js",
   "dependencies": {
+    "@types/bcrypt": "^1.0.0",
+    "@types/cookie-parser": "^1.4.1",
+    "@types/jsonwebtoken": "^7.2.5",
     "@types/mongodb": "^2.2.18",
+    "bcrypt": "^1.0.3",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
     "mongodb": "^3.0.0-rc0"
   },
   "devDependencies": {

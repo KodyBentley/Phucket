@@ -12,9 +12,9 @@ import './index.css';
 ReactDOM.render(
   <Router>
     <div>
-        <Route path="/" component={App} />
-        <Route path="/register" component={Register} />
-        <Route path="/login" component={Login} />
+        <Route exact path="/app" component={App} />
+        <Route exact path="/register" component={Register} />
+        <Route exact path="/login" component={Login} />
     </div>
   </Router>,
   document.getElementById('root') as HTMLElement

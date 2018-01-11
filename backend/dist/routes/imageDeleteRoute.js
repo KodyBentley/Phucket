@@ -8,6 +8,7 @@ exports.default = () => {
     const router = express_1.Router();
     router.post('/', (req, res) => {
         let id = req.body.data._id;
+        console.log(id);
         let path = req.body.data.imgPath;
         let route = '../frontend/public/';
         fs.unlink(route + path, (err) => {

@@ -4,19 +4,18 @@ import Header from './components/header';
 import Popup from './components/popup';
 import Input from './components/inputUpdate';
 import * as BootStrap from 'react-bootstrap';
-// import Database from './backend/src/controllers/databaseController';
 import Props from './interfaces/iProp';
 
 import './App.css';
 import { InputGroup } from 'react-bootstrap';
 
 interface State {
-  imgData: Array<{_id: string, imgPath: string, name: string}>;
+  imgData: Array<{ _id: string, imgPath: string, name: string }>;
   showPopup: boolean;
   showInput: boolean;
 }
 
-class App extends React.Component<{}, State> {
+class App extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.togglePopup = this.togglePopup.bind(this);
@@ -29,26 +28,26 @@ class App extends React.Component<{}, State> {
   }
 
   componentWillMount() {
-    fetch('/api')
+    // fetch('/api')
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+    //   .then((imgData) => {
+    //     return this.setState({ imgData });
+    //   });
+
+    fetch('/login', {
+      method: 'GET',
+      credentials: 'same-origin'
+    })
       .then((res) => {
+        console.log(res);
         return res.json();
       })
-      .then((imgData) => {
-        console.log('img data', imgData)
-        return this.setState({ imgData });
+      .then((data) => {
+        console.log(data);
       });
   }
-
-  // componentDidMount() {
-  //   fetch('/api')
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((users) => {
-  //       return this.setState({ users });
-  //     });
-  //     console.log(this.state.users);
-  // }
 
   togglePopup() {
     this.setState({
@@ -62,7 +61,7 @@ class App extends React.Component<{}, State> {
     });
   }
 
-  deleteItem(data: {_id: string, imgPath: string, name: string}) {
+  deleteItem(data: { _id: string, imgPath: string, name: string }) {
     let arrIndex: number = this.state.imgData.indexOf(data);
     fetch('/delete', {
       method: 'POST',
@@ -80,7 +79,7 @@ class App extends React.Component<{}, State> {
     this.togglePopup();
   }
 
-  updateItem(data: {_id: string, imgPath: string, name: string}, newName: string) {
+  updateItem(data: { _id: string, imgPath: string, name: string }, newName: string) {
     console.log(data);
     fetch('/update', {
       method: 'POST',
@@ -97,7 +96,7 @@ class App extends React.Component<{}, State> {
   }
 
   render() {
-    let data;
+    let test;
     return (
       <div className="App">
         < Header />
@@ -105,11 +104,11 @@ class App extends React.Component<{}, State> {
         <BootStrap.Grid className="container-fluid">
           <BootStrap.Row className="row-fluid">
             {this.state.imgData.map(data => {
-              data = data;
+              test = data;
               return (
                 <BootStrap.Col className="img-container" lg={4} key={data._id}>
                   <div className="img-div" key={data._id}>
-                    <img src={data.imgPath}/>
+                    <img src={data.imgPath} />
                     <p>{data.name}</p>
                     <BootStrap.Button onClick={this.toggleInput} bsStyle="primary">Update</BootStrap.Button>
                     <BootStrap.Button onClick={this.togglePopup} bsStyle="danger">Delete</BootStrap.Button>
@@ -132,7 +131,7 @@ class App extends React.Component<{}, State> {
           <Popup
             text="Are you sure you wish to delete this item?"
             closePopup={this.togglePopup}
-            deleteItem={this.deleteItem.bind(this, data)}
+            deleteItem={this.deleteItem.bind(this, test)}
           />
           : null
         }

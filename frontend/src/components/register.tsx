@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Jumbotron, Row, Col, Grid, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import App from './../App';
 import Login from './login';
 import './../styles/register-login.css';
@@ -15,7 +15,7 @@ interface State {
     email: string;
     password: string;
     passwordConfirm: string;
-    submitted: boolean;
+    registered: boolean;
     member: boolean;
 }
 
@@ -30,7 +30,7 @@ class Register extends React.Component<Props, State> {
             email: '',
             password: '',
             passwordConfirm: '',
-            submitted: false,
+            registered: false,
             member: false,
         };
     }
@@ -56,16 +56,19 @@ class Register extends React.Component<Props, State> {
         })
             .then((res) => {
                 return res.json();
-            });
-        this.setState({
-            submitted: true
-        });
+            })
+            .then((data) => {
+                this.setState({
+                    registered: data.registrationSuccessful
+                })
+            })
+            e.preventDefault();
     }
 
     render() {
-        if (this.state.submitted) {
-            return <App />
-        } else {
+        if (this.state.registered) {
+            return <Redirect push to="/app"></Redirect>
+        }else {
             return (
                 <div className="page-container">
                     <Jumbotron className="register-header"><h1>Register</h1></Jumbotron>
@@ -80,9 +83,9 @@ class Register extends React.Component<Props, State> {
 
                                             <input type="text" name="email" placeholder="Email" onChange={this.handleChange} value={this.state.email} />
 
-                                            <input type="text" name="password" placeholder="Password" onChange={this.handleChange} value={this.state.password} />
+                                            <input type="text" name="password" placeholder="Password" onChange={this.handleChange} value={this.state.password} minLength={6} maxLength={20} />
 
-                                            <input type="text" name="passwordConfirm" placeholder="Confirm Password" onChange={this.handleChange} value={this.state.passwordConfirm} />
+                                            <input type="text" name="passwordConfirm" placeholder="Confirm Password" onChange={this.handleChange} value={this.state.passwordConfirm} minLength={6} maxLength={20} />
 
                                             <input className="register-submit-btn" type="Submit" value="Submit" />
 
